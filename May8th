@@ -1,5 +1,5 @@
 <Baekjoon Practice>
-https://www.acmicpc.net/problem/10809
+1. https://www.acmicpc.net/problem/10809 (C)
 
 #include <stdio.h>
 #include <string.h>
@@ -30,4 +30,42 @@ int main()
    }
    
    return 0;
+}
+
+2. https://www.acmicpc.net/problem/2675 (JAVA)
+
+import java.util.Scanner;
+import java.lang.*;
+
+class Main {
+	public static void main(String[] args) {
+		int test, len;
+
+		Scanner kb = new Scanner (System.in);
+		
+		test = kb.nextInt();
+		
+		String[] str = new String[test];
+		int[] repetition = new int[test];
+
+		// test case의 갯수만큼 반복하여 repetition, str 입력받기
+		for(int i = 0; i < test; i ++) {
+			str[i] = kb.next();
+			repetition[i] = Integer.parseInt(str[i]);
+
+			str[i] = kb.next();
+		}
+		
+		for(int i = 0; i < test; i ++) {
+			len = str[i].length();
+			
+			for(int j = 0; j < len; j ++) {
+				for(int k = 0; k < repetition[i]; k ++)
+						System.out.print(str[i].charAt(j));
+			}
+					System.out.println();
+		}
+		
+		kb.close();
+	}
 }
