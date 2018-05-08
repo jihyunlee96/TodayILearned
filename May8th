@@ -1,5 +1,5 @@
 <Baekjoon Practice>
-1. https://www.acmicpc.net/problem/10809 (C)
+1-1. https://www.acmicpc.net/problem/10809 (C)
 
 #include <stdio.h>
 #include <string.h>
@@ -30,6 +30,42 @@ int main()
    }
    
    return 0;
+}
+
+1-2. (JAVA)
+import java.util.Scanner;
+
+class Main {
+	public static void main(String[] args) {
+		String input;
+		int strLen, letter;
+		
+		// input string 입력받음
+		Scanner kb = new Scanner(System.in);
+		input = kb.next();
+		
+		strLen = input.length();
+		
+		// result[]를 -1로 초기화
+		int[] result = new int[26];
+		
+		for(int i = 0; i < 26; i ++)
+			result[i] = -1;
+		
+		// strLen 만큼 반복. result[] 알맞게 바꾸기
+		for(int i = 0; i < strLen; i ++) {
+			letter = input.charAt(i) - 'a';
+			
+			if(result[letter] == -1)
+				result[letter] = i;
+		}
+		
+		// result[] 출력
+		for(int temp : result)
+			System.out.print(temp + " ");
+		
+		kb.close();
+	}
 }
 
 2. https://www.acmicpc.net/problem/2675 (JAVA)
