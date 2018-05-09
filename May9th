@@ -1,0 +1,15 @@
+<Baekjoon Practice>
+1. https://www.acmicpc.net/problem/11654 (JAVA)
+
+import java.util.Scanner;
+
+class Main {
+	public static void main (String[] args) {
+		String letter;
+		
+		Scanner kb = new Scanner(System.in);
+		letter = kb.next();
+		
+		System.out.println((int)letter.charAt(0));
+	}
+}
