@@ -13,3 +13,50 @@ class Main {
 		System.out.println((int)letter.charAt(0));
 	}
 }
+
+2. https://www.acmicpc.net/problem/1157
+
+import java.util.Scanner;
+
+class Main {
+	public static void main(String[] args) {
+		String input;
+		int[] count = new int[26];
+		int letter = 0, max = -1, maxIndex = 0, len;
+		char result;
+		boolean isQuestion = false;
+		
+		for(int i = 0; i < 26; i ++)
+			count[i] = 0;
+		
+		Scanner kb = new Scanner(System.in);
+		input = kb.next();
+		
+		input = input.toUpperCase();
+		
+		len = input.length();
+		
+		for(int i = 0; i < len; i ++) {
+			letter = input.charAt(i) - 'A';
+			count[letter] ++;
+			
+			if(count[letter] > max) {
+				max = count[letter];
+				maxIndex = letter;
+				isQuestion = false;
+			}
+			else if(count[letter] == max) {
+				isQuestion = true;
+			}
+		}
+		
+		if(isQuestion == true) {
+			System.out.print("?");
+		}
+		else {
+			result = (char)(maxIndex + 'A');
+		
+			System.out.print(result);
+		}
+	}
+}
