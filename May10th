@@ -1,0 +1,55 @@
+<Baekjoon Practice>
+1. https://www.acmicpc.net/problem/1316 (JAVA)
+
+import java.util.Scanner;
+
+class Main {
+	public static void main (String[] args) {
+		int words, count = 0;
+		
+		// 단어의 갯수 words 입력받기
+		Scanner kb = new Scanner(System.in);
+		words = kb.nextInt();
+		
+		// words 갯수 만큼 String 배열 만들기
+		String[] str = new String[words];
+		
+		// words 만큼 반복하여 단어 입력받기
+		for(int i = 0; i < words; i ++) {
+			
+			str[i] = kb.next();
+			
+			// 그룹단어인지 판별하고, 맞다면 카운트 ++
+			if(isGroupWord(str[i]))
+				count++;
+		}
+		
+		// 카운트 출력
+		System.out.print(count);
+		
+		kb.close();
+	}
+	
+	public static boolean isGroupWord(String str) {
+		int len = str.length();
+		char[] letter = new char[100];
+		char last = '\0';
+
+		for(int i = 0; i < len; i ++) {
+			
+			// i번째 인덱스 캐릭터를 letter 배열에 저장
+			letter[i] = str.charAt(i);
+			
+			// 중복 체크 (last와 같다면 무시)
+			for(int j = 0; j < i; j ++) {
+				
+				if (letter[i] == letter[j] && letter[i] != last && i!= 1)
+					return false;
+				
+			}
+			last = letter[i];
+		}
+		
+		return true;
+	}
+}
