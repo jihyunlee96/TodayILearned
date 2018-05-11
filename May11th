@@ -30,3 +30,34 @@ class Main {
 	}
 }
 
+2. https://www.acmicpc.net/problem/5622 (JAVA)
+
+import java.util.Scanner;
+
+class Main {
+	public static void main(String[] args) {
+		String str;
+		int len, time = 0;
+		
+		Scanner kb = new Scanner(System.in);
+		str = kb.nextLine();
+		str = str.toUpperCase();
+		
+		len = str.length();
+		
+		for(int i = 0; i < len; i ++) {
+			char letter = str.charAt(i);
+			
+			if(letter <= 'R')
+				time += (int)(letter - 'A') / 3 + 3;
+			else if (letter == 'S')
+				time += 8;
+			else if (letter <= 'V')
+				time += 9;
+			else
+				time += 10;
+		}
+		
+		System.out.println(time);
+	}
+}
