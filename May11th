@@ -61,3 +61,27 @@ class Main {
 		System.out.println(time);
 	}
 }
+
+3. https://www.acmicpc.net/problem/2941 (JAVA)
+Reference: http://andamiro25.tistory.com/73
+
+import java.util.Scanner;
+
+class Main {
+	public static void main(String[] args) {
+		String str;
+		String[] croatia = {"c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="};
+		int len;
+		
+		Scanner kb = new Scanner(System.in);
+		str = kb.nextLine();
+		
+		for(int i = 0; i < 8; i ++) 
+			str = str.replaceAll(croatia[i], "a");
+			
+		len = str.length();
+		System.out.print(len);
+		
+		kb.close();
+	}
+}
