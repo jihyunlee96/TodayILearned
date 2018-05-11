@@ -1,0 +1,32 @@
+<Baekjoon Practice>
+1. https://www.acmicpc.net/problem/2908 (JAVA)
+
+import java.util.Scanner;
+
+class Main {
+	public static void main (String[] args) {
+		int num[] = new int[2];
+		int invert[] = new int[2];
+		int hun, ten, one;
+		
+		Scanner kb = new Scanner(System.in);
+		num[0] = kb.nextInt();
+		num[1] = kb.nextInt();
+		
+		for(int i = 0; i < 2; i ++) {
+			hun = num[i] / 100;
+			ten = (num[i] / 10) % 10;
+			one = num[i] % 10;
+			
+			invert[i] = 100*one + 10*ten + hun;
+		}
+		
+		if(invert[0] > invert[1])
+			System.out.print(invert[0]);
+		else
+			System.out.print(invert[1]);
+			
+		kb.close();
+	}
+}
+
