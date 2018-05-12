@@ -1,0 +1,36 @@
+<Baekjoon Practice>
+1. https://www.acmicpc.net/problem/2292 (JAVA)
+
+import java.util.Scanner;
+
+class Main {
+	public static void main(String[] args) {
+		int dist = 0;
+		int num, divider;
+		int count = -1;
+		
+		Scanner kb = new Scanner(System.in);
+		num = kb.nextInt();
+		
+		if(num == 1)
+			dist = 1;
+			
+		else {
+			num -= 2;
+			
+			divider = num / 6;
+			
+			for(int i = 0; ; i++, count += i) {
+					dist ++;
+					
+				if(divider <= count) {
+					break;
+				}
+			}
+		}
+		
+		System.out.print(dist);
+		
+		kb.close();
+	}
+}
