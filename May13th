@@ -1,0 +1,55 @@
+<Baekjoon Practice>
+1. https://www.acmicpc.net/problem/1193 (JAVA)
+
+import java.util.*;
+
+class Main{
+	
+	public static void main(String[] args) {
+		int num, row;
+
+		Scanner kb = new Scanner(System.in);
+		num = kb.nextInt();
+		
+		row = getRow(num);
+		printFraction(num, row);
+		
+		kb.close();
+	}
+	
+	public static int getRow(int num) {
+		int prevCount = 0, row = 0;
+		
+			for(int count = 0; ; row ++, count += row) {
+				
+				if(prevCount < num && num <= count)
+					break;
+					
+				prevCount = count;
+		}
+		
+		return row;
+	}
+	
+	public static void printFraction(int num, int row) {
+		String fraction = null;
+		int denominator, numerator;
+		int rowFirstNum = 1; // 그 줄 첫번째 분수의 num
+		int rowWhich; // num이 그 줄에서 몇번째 분수인지
+		
+		for(int i = 0; i < row; i ++)
+			rowFirstNum += i;
+		
+		rowWhich = num - rowFirstNum;
+		
+		numerator = row - rowWhich;
+		denominator = 1 + rowWhich;
+		
+		if(row % 2 == 0)
+			System.out.print(denominator + "/" + numerator);
+		else
+			System.out.print(numerator + "/" + denominator);
+		
+		return;
+	}
+}
