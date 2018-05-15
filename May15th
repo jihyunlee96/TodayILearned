@@ -1,0 +1,65 @@
+Quick Sort Implementation => Runtime Error :( Have to fix it somehow
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void readList(int *list, int count); // 데이터를 읽고, List 만듬
+void printList(int *list, int count); // List 출력
+void quickSort(int *list, int left, int right);
+void swap (int *n1, int *n2);
+
+int main() {
+	int count;
+	int *list;
+	
+	scanf("%d", &count);
+
+	list = (int *)malloc(count*sizeof(int));
+	readList(list, count);
+	
+		printList(list, count);
+
+	quickSort(list, 0, count-1);
+	
+	printList(list, count);
+	
+	return 0;
+}
+
+void readList(int *list, int count) {
+	for(int i = 0; i < count; i ++)
+		scanf(" %d", &list[i]);
+}
+
+void printList(int *list, int count) {
+	for(int i = 0; i < count; i ++)
+		printf("%d\n", list[i]);
+}
+
+void quickSort(int *list, int left, int right) {
+	int pivot, i, j;
+	
+	if(left < right) {
+		i = left; j = right + 1;
+		pivot = list[left];
+		
+		do {
+			do i++; while (list[i] < pivot);
+			do j--; while (list[i] > pivot);
+			swap(&list[i], &list[j]);
+		} while (i < j);
+		
+		swap(&list[left], &list[j]);
+		
+		quickSort(list, left, j-1);
+		quickSort(list, j+1, right);
+	}
+}
+
+void swap (int *n1, int *n2) {
+	int temp;
+	
+	temp = *n1;
+	*n1 = *n2;
+	*n2 = temp;
+}
