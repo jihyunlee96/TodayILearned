@@ -1,0 +1,17 @@
+<Baekjoon Practice> 
+1. https://www.acmicpc.net/problem/2438 (C)
+내일 DS 중간고사 준비 때문에, 오늘은 간단한 코딩 문제로 풀었습니다.
+
+int main() {
+    int row;
+    
+    scanf("%d", &row);
+    
+    for(int i = 1; i <= row; i ++) {
+        for(int j = 1; j <= i; j ++)
+            printf("*");
+        printf("\n");
+    }
+    
+    return 0;
+}
