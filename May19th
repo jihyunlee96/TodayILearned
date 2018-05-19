@@ -1,0 +1,100 @@
+<Stack Implementation in JAVA>
+https://www.acmicpc.net/problem/10828
+
+import java.util.*;
+
+class Stack_Main {
+	public static void main (String[] args) {
+		int n; 
+		String input;
+		
+		Stack_Main outer = new Stack_Main();
+
+		Stack stack = outer.new Stack();
+		
+		Scanner kb = new Scanner(System.in);
+		input = kb.nextLine();
+		n = Integer.parseInt(input);
+		
+		String[] command = new String[n];
+
+		for(int i = 0; i < n; i ++) {
+			command[i] = kb.nextLine();
+		}
+
+		for (int i = 0; i < n; i ++) {
+			if (command[i].contains("push")) {
+				int num, len;
+				len = command[i].length();
+				
+				command[i] = command[i].substring(5, command[i].length());
+				num = Integer.parseInt(command[i]);
+				stack.push(num);
+			}
+			else if (command[i].contains("pop"))
+				stack.pop();
+			else if (command[i].contains("size"))
+				stack.size();
+			else if (command[i].contains("empty"))
+				stack.empty();
+			else if (command[i].contains("top"))
+				stack.top();
+		}
+
+		kb.close();
+	}
+	
+	public class ListNode {
+		public int data;
+		public Listnode link;
+
+		public ListNode () { link = null; data = -1; }
+
+		public ListNode (int newData, ListNode linkValue) { data = newData; link = (Listnode) linkValue; }
+
+		public void setData (int newData) { data = newData; }
+
+		public int getData () { return data; }
+
+		public void setLink (ListNode newLink) { link = (Listnode) newLink; }
+
+		public ListNode getLink() { return (ListNode) link; }
+	}
+
+	public class Stack extends ListNode {
+		private ListNode top;
+
+		public Stack() { top = null; }
+
+		public void top() { System.out.println(top.getData()); }
+
+		public void empty() {
+			if (top == null) System.out.println("1");
+			else System.out.println("0");
+		}
+
+		public void size() {
+			int count = 0;
+			ListNode position = top;
+			while (position != null) {
+				count ++;
+				position = position.getLink();
+			}
+
+			System.out.println(count);
+		}
+
+		public void push(int newData) {
+			top = new ListNode(newData, top);
+		}
+
+		public void pop() {
+			if (top != null) {
+				System.out.println(top.getData());
+				top = top.getLink();
+			}
+			else
+				System.out.println("-1");
+		}
+	}
+}
