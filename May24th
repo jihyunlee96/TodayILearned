@@ -1,0 +1,57 @@
+[Queue Class Implementation in JAVA]
+
+public class Q4_Queue {
+	private String data;
+	private Q4_Queue link;
+	private Q4_Queue rear;
+	private static int len;
+	
+	public Q4_Queue() { link = null; data = null; rear = null; len = 0;}
+	
+	public Q4_Queue (String newData, Q4_Queue linkValue) {
+		data = newData;
+		link = linkValue;
+	}
+	
+	public void setData (String newData) { data = newData; }
+	
+	public String getData() { return data; }
+	
+	public void setLink (Q4_Queue newLink) { link = newLink; }
+	
+	public Q4_Queue getLink() { return link; }
+	
+		
+	public void showData() {
+		Q4_Queue position = rear;
+		
+		System.out.print("Queue Status:");
+		for (int i = 0; i < len; i ++) {
+			System.out.print(" " + position.getData());
+			position = position.getLink();
+		}
+		System.out.println();
+	}
+	
+	public void Push (String input) {
+		rear = new Q4_Queue(input, rear);
+		len ++;
+	}
+	
+	public String Pop() {
+		Q4_Queue position = rear;
+		Q4_Queue front = null;
+		String result;
+		
+		for (int i = 0; i < len; i ++) {
+			front = position;
+			position = position.getLink();
+		}
+		
+		result = front.getData();
+		
+		len --;
+		
+		return result;
+	}
+}
