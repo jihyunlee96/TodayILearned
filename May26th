@@ -1,0 +1,38 @@
+[JSON Text File 읽어오기]
+
+char *readjsonfile (const char * filename) 함수 사용
+1) 동작: 임의로 지정한 JSON 텍스트 파일로부터 JSON String을 만들어냅니다.
+2) 파라미터: JSON Text File 이름
+3) 리턴 값: Text File 로부터 읽어들인 JSON String
+
+// 함수 코드 본문
+
+char * readjsonfile(const char * filename)
+
+{
+  char input[200]; // can read up to 200 characters at a time
+  char *result;
+  
+  FILE *fp;
+  fp = fopen(filename, "rt");
+
+
+  // first allocation
+  fgets(input, sizeof(input), fp);
+
+
+  result = (char *) malloc(strlen(input));
+  strncpy(result, input, strlen(input));
+
+
+  // second ~ nth allocation
+  while(!feof(fp)) {
+    fgets(input, sizeof(input), fp);
+    result = (char *) realloc(result, sizeof(result) + sizeof(input));
+    strcat(result, input);
+  }
+  result[strlen(result)] = '\0';
+
+
+  return result;
+}
