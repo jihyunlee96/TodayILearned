@@ -1,0 +1,330 @@
+[Student라는 구조체에 대하여 Quick Sort, Bubble Sort 구현하는 프로그램]
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_STUDENT 500
+#define MAX_BUFFER 80
+
+#define TRUE 1
+#define FALSE 0
+
+typedef struct {
+  char name[20];
+  int student_id;
+  char department[20];
+  char major[20];
+  int mid_score;
+  int final_score;
+  int total;
+} student;
+
+int read_file(student *student_list[]);
+
+void quickSort_string(student *student_list[], char *key_array[], int left, int right, int count);
+void quickSort_int(student *student_list[], int *int_key_array, int left, int right, int count);
+
+void bubbleSort_string (student *student_list[], char *key_array[], int count);
+void bubbleSort_int (student *student_list[], int *int_key_array, int count);
+
+void set_string_key(student *student_list[], char * key_array[], int key, int count);
+void set_int_key(student *student_list[], int * int_key_array, int key, int count);
+
+void swap_string (student * student1, student * student2, char key1[], char key2[]);
+void swap_int (student * student1, student * student2, int *num1, int *num2);
+
+void copy (student * student1, student * student2);
+int compare_string (char *str1, char *str2);
+int compare_int (int num1, int num2);
+void display_result(student *student_list[], int count);
+
+int main(void) {
+  int count; // number of students
+  int key, algorithm;
+  char *key_array[20];
+  int *int_key_array;
+  char key_string[7][20] = {"Name", "Student ID", "department", "Major", "Mid-Term Score", "Final Score", "Total Score"};
+
+  // create an array of student struct pointer
+  student * student_list[MAX_STUDENT];
+
+  while(TRUE)
+  {
+    // read data from file, and store the number of students
+    count = read_file(student_list);
+
+    printf("Running the sorting program...\n\n");
+    printf("Input the key\n0: Name\n1: Student ID\n2: Department\n3: Major\n4: Mid-Term Score\n5: Final Score\n6: Total Score\n7: Exit\n: ");
+    scanf(" %d", &key);
+
+    if(key == 7) {
+      printf("\nExiting the sorting program...\n\n");
+      break;
+    }
+
+    printf("\nInput the sorting algorithm\n0: Quick Sort\n1: Bubble Sort\n");
+    scanf(" %d", &algorithm);
+
+    if(algorithm == 0) {
+      if(key == 0 || key == 2 || key == 3) {
+        set_string_key(student_list, key_array, key, count);
+        quickSort_string(student_list, key_array, 0, count - 1, count);
+      }
+      else {
+        int_key_array = (int *)malloc(count*sizeof(int));
+        set_int_key(student_list, int_key_array, key, count);
+        quickSort_int(student_list, int_key_array, 0, count - 1, count);
+      }
+      printf("\nResult after quick sort (key = %s): ", key_string[key]);
+      display_result(student_list, count);
+    }
+    else if(algorithm == 1) {
+      if(key == 0 || key == 2 || key == 3) {
+        set_string_key(student_list, key_array, key, count);
+        bubbleSort_string(student_list, key_array, count);
+      }
+      else {
+        int_key_array = (int *)malloc(count*sizeof(int));
+        set_int_key(student_list, int_key_array, key, count);
+        bubbleSort_int(student_list, int_key_array, count);
+      }
+      printf("\nResult after bubble sort (key = %s): ", key_string[key]);
+      display_result(student_list, count);
+    }
+  }
+  
+  return 0;
+}
+
+int read_file(student *student_list[])
+{
+  int count = 0;
+  char input[MAX_BUFFER];
+  FILE *file;
+  file = fopen("studentlist.txt", "rt");
+
+  while(!feof(file)) {
+    // Dynamic memory allocation
+    student_list[count] = (student *)malloc(sizeof(student));
+
+    // Read data from file
+    fscanf(file, "%s", student_list[count]->name);
+    fscanf(file, "%s", input);
+    student_list[count]->student_id = atoi(input);
+    fscanf(file, "%s", student_list[count]->department);
+    fscanf(file, "%s", student_list[count]->major);
+    fscanf(file, "%s", input);
+    student_list[count]->mid_score = atoi(input);
+    fscanf(file, "%s", input);
+    student_list[count]->final_score = atoi(input);
+    student_list[count]->total = student_list[count]->mid_score + student_list[count]->final_score;
+
+    count ++;
+  }
+  fclose(file);
+
+  // return number of students
+  return count;
+}
+
+void quickSort_string(student *student_list[], char *key_array[], int left, int right, int count)
+{
+  int i, j;
+  char pivot[20];
+
+  if (left < right)
+  {
+    i = left;
+    j = right + 1;
+    strcpy(pivot, key_array[left]);
+
+    do {
+      do i ++; while(strcmp(key_array[i], pivot) < 0);
+      do j --; while (strcmp(key_array[j], pivot) > 0);
+      if (i < j) swap_string(student_list[i], student_list[j], key_array[i], key_array[j]);
+    } while (i < j);
+
+    swap_string (student_list[left], student_list[j], key_array[left], key_array[j]);
+
+    quickSort_string(student_list, key_array, left, j-1, count);
+    quickSort_string(student_list, key_array, j+1, right, count);
+  }
+}
+
+void quickSort_int(student *student_list[], int *int_key_array, int left, int right, int count)
+{
+  int i, j;
+  int pivot;
+
+  if (left < right)
+  {
+    i = left;
+    j = right + 1;
+    pivot = int_key_array[left];
+
+    do {
+      do i ++; while(int_key_array[i] < pivot);
+      do j --; while (int_key_array[j] > pivot);
+      if (i < j) swap_int(student_list[i], student_list[j], &int_key_array[i], &int_key_array[j]);
+    } while (i < j);
+
+    swap_int (student_list[left], student_list[j], &int_key_array[left], &int_key_array[j]);
+
+    quickSort_int(student_list, int_key_array, left, j-1, count);
+    quickSort_int(student_list, int_key_array, j+1, right, count);
+  }
+}
+
+void bubbleSort_string (student *student_list[], char *key_array[], int count) {
+  int max_index = count - 1;
+  int i;
+
+  while(max_index > 0) {
+    for(i = 0; i < count - 1; i ++) {
+      if (compare_string(key_array[i], key_array[i+1]) > 0)
+        swap_string(student_list[i], student_list[i+1], key_array[i], key_array[i+1]);
+    }
+    max_index --;
+  }
+}
+
+void bubbleSort_int (student *student_list[], int *int_key_array, int count) {
+  int max_index = count - 1;
+  int i;
+
+  while(max_index > 0) {
+    for(i = 0; i < count - 1; i ++) {
+      if (compare_int(int_key_array[i], int_key_array[i+1]) > 0)
+        swap_int(student_list[i], student_list[i+1], &int_key_array[i], &int_key_array[i+1]);
+    }
+    max_index --;
+  }
+}
+
+int compare_string (char *str1, char *str2)
+{
+  if (strcmp(str1, str2) == 0)
+    return 0;
+  else if (strcmp(str1, str2) > 0)
+    return 1;
+  else
+    return -1;
+}
+
+int compare_int (int num1, int num2)
+{
+  if (num1 == num2)
+    return 0;
+  else if (num1 > num2)
+    return 1;
+  else
+    return -1;
+}
+
+void set_string_key(student *student_list[], char *key_array[20], int key, int count) {
+  int i;
+
+  if(key == 0) {
+    for(i = 0; i < count; i ++) {
+      key_array[i] = (char *)malloc(20*sizeof(char));
+      strcpy(key_array[i], student_list[i]->name);
+    }
+  } 
+  else if(key == 2) {
+    for(i = 0; i < count; i ++) {
+      key_array[i] = (char *)malloc(20*sizeof(char));
+      strcpy(key_array[i], student_list[i]->department);
+    }
+  }
+  else {
+    for(i = 0; i < count; i ++) {
+      key_array[i] = (char *)malloc(20*sizeof(char));
+      strcpy(key_array[i], student_list[i]->major);
+    }
+  }
+}
+
+void set_int_key(student *student_list[], int * int_key_array, int key, int count)
+{
+  int i;
+
+  if(key == 1) {
+    for(i = 0; i < count; i ++) {
+      int_key_array[i] = student_list[i]->student_id;
+    }
+  } 
+  else if(key == 4) {
+    for(i = 0; i < count; i ++) {
+      int_key_array[i] = student_list[i]->mid_score;
+    }
+  } 
+  else if(key == 5) {
+    for(i = 0; i < count; i ++) {
+      int_key_array[i] = student_list[i]->final_score;
+    }
+  } 
+  else {
+    for(i = 0; i < count; i ++) {
+      int_key_array[i] = student_list[i]->total;
+    }
+  } 
+}
+
+void swap_string (student * student1, student * student2, char key1[], char key2[])
+{
+  student *temp = (student *)malloc(sizeof(student));
+  char * temp_key = (char *)malloc(20 * sizeof(char));
+
+  copy(temp, student1);
+  copy(student1, student2);
+  copy(student2, temp);
+
+  strcpy(temp_key, key1);
+  strcpy(key1, key2);
+  strcpy(key2, temp_key);
+
+  free(temp_key);
+}
+
+void swap_int (student * student1, student * student2, int *num1, int *num2)
+{
+  student *temp = (student *)malloc(sizeof(student));
+  int temp_key;
+
+  copy(temp, student1);
+  copy(student1, student2);
+  copy(student2, temp);
+
+  temp_key = *num1;
+  *num1 = *num2;
+  *num2 = temp_key;
+}
+
+void copy (student * student1, student * student2)
+{
+  strcpy(student1->name, student2->name);
+  student1->student_id = student2->student_id;
+  strcpy(student1->department, student2->department);
+  strcpy(student1->major, student2->major); 
+  student1->mid_score = student2->mid_score;
+  student1->final_score = student2->final_score;
+  student1->total = student2->total;
+}
+
+void display_result(student *student_list[], int count)
+{ 
+  printf("\n\n 성 명     학 번      학 부     전 공       중 간     기 말     총 점    \n\n");
+
+  for (int i = 0; i < count; i++) {
+    printf(" %s  ", student_list[i]->name);
+    printf(" %6d  ", student_list[i]->student_id);
+    printf(" %s  ", student_list[i]->department);
+    printf(" %s  ", student_list[i]->major);
+    printf(" %6d  ", student_list[i]->mid_score);
+    printf(" %6d  ", student_list[i]->final_score);
+    printf(" %6d  ", student_list[i]->total);
+    printf("\n");
+   }
+   printf("\n\n");
+}
