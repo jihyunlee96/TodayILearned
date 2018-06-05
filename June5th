@@ -1,0 +1,67 @@
+[JAVA 2048 Implmentation - Main Class]
+
+import java.util.Scanner;
+
+public class Main_2048 {
+	
+	public static void main(String[] args) {
+		Scanner kb = new Scanner(System.in);
+		String input;
+		boolean isInputValid = false;
+		int [][] nums = new int [4][4];
+		int score = 0;
+		
+		// 인트로 화면 출력
+		Intro.printIntro(nums);
+		
+		while(true) {
+			// 게임 화면 & 현재 스코어 출력
+			Grid.printGrid(nums); Grid.printScore(score);
+			
+			 do {
+				isInputValid = true;
+				 
+				// 방향키 인스트럭션
+				System.out.println("\nType 'w' to slide UP, 's' to slide DOWN, "
+						+ "'a' to slide LEFT, 'd' to slide RIGHT");
+				System.out.print(": ");
+				
+				// 방향키 입력받기
+				input = kb.next();
+				
+				Move m = new Move();
+				
+				if (input.contains("w"))
+					score = m.MoveUp(nums, score);
+				else if (input.contains("s"))
+					score = m.MoveDown(nums, score);
+				else if (input.contains("a"))
+					score = m.MoveLeft(nums, score);
+				else if (input.contains("d"))
+					score = m.MoveRight(nums, score);
+				else {
+					System.out.println("Invalid Input! Please type again.");
+					isInputValid = false;
+				}
+			} while (!isInputValid);
+			 
+			// 게임 클리어나 게임 실패 시 반복문 종료
+			if (StageClear.isStageClear(nums)) {
+				System.out.println("Stage Clear :-)");
+				break;
+			}
+			else if (StageClear.isStageFail(nums)) {
+				System.out.println("Stage Failed :-(");
+				break;
+			}			
+		}
+		
+		Outro o = new Outro();
+		
+		System.out.print("Your user name: ");
+		String username = kb.next();
+			
+		o.writeScore("scores.txt", username, score);		
+		o.printRank();
+	}
+}
