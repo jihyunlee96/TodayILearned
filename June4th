@@ -1,0 +1,70 @@
+[JAVA 2048 Game Implementation - Specifications]
+
+*전체 변수
+- int[][] nums - 게임 화면에 출력할 숫자 배열을 저장하는 변수
+- int score - 게임 스코어를 저장하는 변수
+- String id - 유저 아이디를 저장하는 변수
+
+
+1. 게임 시작 전 화면과 관련된 메소드를 포함하는 클래스
+public class Intro
+
+1-1.
+public static void printIntro ()
+기능: 게임 전 화면을 콘솔에 출력한다.
+
+2.게임 중 화면 출력과 관련된 메소드를 포함하는 클래스
+public class Grid
+
+2-1.
+public void printGrid (int[][] nums)
+기능: 게임 화면 (4x4 그리드 + 숫자) 을 출력한다. 출력할 숫자는 instance variable인 int[][] nums 에서 읽어온다.
+
+2-2.
+public void printScore (int score)
+기능: 현재 게임 스코어를 파라미터로 입력받아 화면에 출력한다.
+
+3.유저가 입력한 화살표에 따라서 게임 화면을 바꾸는 것과 관련된 클래스
+public class Move 
+
+3-1.
+public int[][] moveUp (int[][] nums)
+기능: 기존 숫자 배열을 입력받고, 위쪽 화살표를 입력받았을 때 숫자 배열이 어떻게 변화할 지 계산하여 그 배열을 리턴한다.
+
+3-2.
+public int[][] moveDown (int[][] nums)
+기능: 기존 숫자 배열을 입력받고, 아래쪽 화살표를 입력받았을 때 숫자 배열이 어떻게 변화할 지 계산하여 그 배열을 리턴한다.
+
+3-3.
+public int[][] moveRight (int[][] nums)
+기능: 기존 숫자 배열을 입력받고, 오른쪽 화살표를 입력받았을 때 숫자 배열이 어떻게 변화할 지 계산하여 그 배열을 리턴한다.
+
+3-4.
+public int[][] moveLeft (int[][] nums)
+기능: 기존 숫자 배열을 입력받고, 왼쪽 화살표를 입력받았을 때 숫자 배열이 어떻게 변화할 지 계산하여 그 배열을 리턴한다.
+
+4.게임 스테이지 성공 / 실패를 판별하는 것과 관련된 메소드를 포함하는 클래스
+public class StageClear
+
+4-1.
+public boolean isStageClear(int [][] nums)
+기능: 숫자 배열 중 2048이 만들어졌는지 확인하고, 만들어졌으면 true / 아니면 false 리턴
+
+4-2.
+public boolean isStageFail(int [][] noms)
+기능: 숫자 배열을 읽고, 더 이상 게임 진행이 불가한 경우 true / 아니면 false 리턴
+
+5.게임 종료 화면과 관련된 메소드를 포함하는 클래스
+public class Outro
+
+5-1.
+public void writeScore ()
+기능: 유저 아이디를 입력받고, 아이디와 최종 스코어를 text 파일에 출력한다.
+
+5-2.
+public void printOutro ()
+기능: 게임 종료 화면 출력. printRank() 메소드를 불러 랭킹도 같이 출력한다.
+
+5-3.
+private void printRank ()
+기능: 게임 스코어 랭킹을 아이디와 함께 출력한다.
