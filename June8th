@@ -1,0 +1,23 @@
+[https://business.programmers.co.kr/tryouts/3/challenges/10855]
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+bool solution(int arr[], size_t arr_m) {
+    bool answer = true;
+    int i;
+    int sum = 0;
+    
+    for(i = 1; i <= arr_m; i ++)
+        sum += i;
+
+    for(i = 0; i < arr_m; i ++) {
+        sum -= arr[i];
+    }
+    
+    if(sum != 0)
+        answer = false;
+    
+    return answer;
+}
