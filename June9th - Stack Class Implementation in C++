@@ -1,0 +1,57 @@
+#include <iostream>
+#define MAX_SIZE 10
+
+using namespace std;
+
+class my_stack {
+		int stack[MAX_SIZE];
+		int top = 0;
+		bool full_check();
+		bool empty_check();
+
+	public:
+		my_stack();
+		void push(int n);
+		int pop();
+		void traverse();
+};
+
+bool my_stack :: full_check() {
+	if (top == MAX_SIZE) {
+		cout << "full stack!\n";
+		return true;
+	}
+	else return false;
+}
+
+bool my_stack :: empty_check() {
+	if (top == 0) {
+		cout << "empty stack!\n";
+		return true;
+	}
+	else return false;
+}
+
+my_stack :: my_stack() {
+	top = 0;
+}
+
+void my_stack :: push(int n) {
+	if(full_check()) return;
+	stack[top++] = n;
+}
+
+int my_stack :: pop() {
+	if(empty_check()) return -1;
+	return stack[--top];
+}
+
+void my_stack :: traverse() {
+	if(empty_check()) return;
+
+	int i;
+	for (i = top-1; i >= 0; i --)
+		cout << stack[i] << " ";
+
+	cout << "\n";
+}
