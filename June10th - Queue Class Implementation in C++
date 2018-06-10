@@ -1,0 +1,56 @@
+#include <iostream>
+#define SIZE 10
+
+using namespace std;
+
+class my_queue {
+		int q[SIZE];
+		int rear;
+		int front;
+		bool empty_check();
+		bool full_check();
+	public:
+		my_queue();
+		void add_q(int n);
+		int delete_q();
+		void traverse();
+};
+
+my_queue:: my_queue() {
+	front = rear = 0;
+}
+
+bool my_queue:: empty_check() {
+	if(rear == front)
+		return true;
+	else
+		return false;
+}
+
+bool my_queue:: full_check() {
+	if((rear+1) % SIZE == front)
+		return true;
+	return false;
+}
+
+void my_queue:: add_q(int n) {
+	if(full_check()) {
+		cout << "full queue!\n";
+		return;
+	}
+	q[rear++] = n;
+}
+
+int my_queue:: delete_q() {
+	if(empty_check()) {
+		cout << "empty queue!\n";
+		return -1;
+	}
+	return q[--front];
+}
+
+void my_queue:: traverse() {
+	int i;
+	for(i = front; i != rear; i = (i+1)%SIZE)
+		cout << q[i] << "\n";
+}
