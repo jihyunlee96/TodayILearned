@@ -1,0 +1,37 @@
+[Data Structure - Hash Function 예시 정리]
+
+1) Mid-Square
+
+  -  주어진 Identifier 를 제곱한 결과에서 중간의 일정 수 bit를 취하는 Function
+
+
+
+2) Division
+
+  -  Modulus operator (%) 사용
+
+  -  주어진 Identifier 를 특정한 숫자인 M으로 나눈 나머지를 취하는 Function
+
+  -  M 의 값은 Prime Number 이거나, 20 이하의 정수로 나누어 떨어지지 않는 수가 좋다고 한다.
+
+
+
+3) Folding
+
+  -  Identifier 를 몇 개의 파트로 나누고, 겹쳐서 더한 수를 취하는 Function
+
+  -  대표적으로는 Shift Folding, Folding at the Boundaries 두 가지가 있다.
+
+  -  Folding at the Boundaries 에서는 홀수번 파트의 숫자가 역순으로 바뀌어서 더해진다.
+
+
+
+4) Digit Analysis
+
+  -  미리 Identifier 가 예상 가능하며, static 할 경우에 사용된다.
+
+  -  Identifier 를 적절하게 변환한 뒤, 특정 digit을 취한다.
+
+
+
+좋은 참고 사이트: http://faculty.tamuc.edu/dcreider/csci520/Note520/Note%207.htm

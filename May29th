@@ -1,0 +1,47 @@
+int read_file(student *student_list[])
+{
+	int count = 0;
+	char input[MAX_BUFFER];
+	FILE *file;
+	file = fopen("studentlist.txt", "rt");
+
+	while(!feof(file)) {
+		// Dynamic memory allocation
+		student_list[count] = (student *)malloc(sizeof(student));
+
+		// Read data from file
+		fscanf(file, "%s", student_list[count]->name);
+		fscanf(file, "%s", input);
+		student_list[count]->student_id = atoi(input);
+		fscanf(file, "%s", student_list[count]->department);
+		fscanf(file, "%s", student_list[count]->major);
+		fscanf(file, "%s", input);
+		student_list[count]->mid_score = atoi(input);
+		fscanf(file, "%s", input);
+		student_list[count]->final_score = atoi(input);
+		student_list[count]->total = student_list[count]->mid_score + student_list[count]->final_score;
+
+		count ++;
+	}
+	fclose(file);
+
+	// return number of students
+	return count;
+}
+
+void display_result(student *student_list[], int count)
+{	
+	printf("\n\n\n 성 명     학 번      학 부     전 공       중 간     기 말     총 점    \n\n");
+
+	for (int i = 0; i < count; i++) {
+		printf(" %s  ", student_list[i]->name);
+    printf(" %6d  ", student_list[i]->student_id);
+		printf(" %s  ", student_list[i]->department);
+    printf(" %s  ", student_list[i]->major);
+    printf(" %6d  ", student_list[i]->mid_score);
+    printf(" %6d  ", student_list[i]->final_score);
+    printf(" %6d  ", student_list[i]->total);
+    printf("\n");
+   }
+   printf("\n\n");
+}
